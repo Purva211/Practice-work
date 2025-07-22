@@ -22,7 +22,7 @@ function addTask() {
     li.remove();
   };
 
-  li.appendChild(span);
+  li.appendChild(span);`
   li.appendChild(deleteBtn);
   taskList.appendChild(li);
 
