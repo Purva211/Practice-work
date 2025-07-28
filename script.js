@@ -1,30 +1,57 @@
-function addTask() {
-  const input = document.getElementById("taskInput");
-  const taskText = input.value.trim();
+document.addEventListener("DOMContentLoaded", () => {
+  const todoList = document.getElementById("todoList");
+  const taskInput = document.getElementById("taskInput");
+  const addBtn = document.querySelector(".add-btn");
 
-  if (taskText === "") return;
+  let tasks = JSON.parse(localStorage.getItem("task")) || [];
 
-  const taskList = document.getElementById("taskList");
+  tasks.forEach((task) => renderTask(task));
 
-  const li = document.createElement("li");
-  li.className = "task";
+  addBtn.addEventListener("click", () => {
+    const taskText = taskInput.value.trim();
+    if (taskText === "") return;
 
-  const span = document.createElement("span");
-  span.innerText = taskText;
-  span.onclick = () => {
-    li.classList.toggle("completed");
-  };
+    const newTask = {
+      id: Date.now(),
+      text: taskText,
+      completed: false,
+    };
 
-  const deleteBtn = document.createElement("button");
-  deleteBtn.className = "delete-btn";
-  deleteBtn.innerText = "delete";
-  deleteBtn.onclick = () => {
-    li.remove();
-  };
+    tasks.push(newTask);
+    saveTasks();
+    renderTask(newTask);
+    taskInput.value = ""; // Clear input
+  });
 
-  li.appendChild(span);`
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
+  function renderTask(task) {
+    const li = document.createElement("li");
+    li.setAttribute("data-id", task.id);
+    if (task.completed) li.classList.add("completed");
 
-  input.value = "";
-}
+    li.innerHTML = `
+      <span>${task.text}</span>
+      <button class="delete-btn">Delete</button>
+    `;
+
+    // Toggle complete on span click
+    li.querySelector("span").addEventListener("click", () => {
+      task.completed = !task.completed;
+      li.classList.toggle("completed");
+      saveTasks();
+    });
+
+    // Delete button logic
+    li.querySelector(".delete-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      tasks = tasks.filter((t) => t.id !== task.id);
+      saveTasks();
+      li.remove();
+    });
+
+    todoList.appendChild(li);
+  }
+
+  function saveTasks() {
+    localStorage.setItem("task", JSON.stringify(tasks));
+  }
+});

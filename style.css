@@ -9,19 +9,20 @@ body {
   margin: 0;
 }
 
-.todo-container {
+.container {
   background: #1e1e1e;
   padding: 20px 30px;
   border-radius: 10px;
   box-shadow: 0 0 10px #000;
   text-align: center;
+  width: 350px;
 }
 
 h2 {
   margin-bottom: 20px;
 }
 
-.input-section {
+.input-container {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
@@ -33,6 +34,8 @@ input[type="text"] {
   border: none;
   border-radius: 5px;
   outline: none;
+  background: #2c2c2c;
+  color: #fff;
 }
 
 .add-btn {
@@ -44,12 +47,13 @@ input[type="text"] {
   cursor: pointer;
 }
 
-ul#taskList {
+ul#todoList {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
-li.task {
+li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -60,20 +64,20 @@ li.task {
   transition: 0.2s;
 }
 
-li.task.completed span {
+li.completed span {
   text-decoration: line-through;
   opacity: 0.6;
 }
 
-.task span {
+li span {
   cursor: pointer;
   flex: 1;
   text-align: left;
 }
 
-.delete-btn {
-  background-color: #e74c3c;
-  color: white;
+button.delete-btn {
+  background-color: #5e2ca5; 
+  color: #fff;
   border: none;
   padding: 6px 10px;
   border-radius: 5px;
